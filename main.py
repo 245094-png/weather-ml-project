@@ -6,7 +6,8 @@ from sklearn.preprocessing import StandardScaler
 
 print("Program started")
 
-data = pd.read_csv("weatherHistory.csv")
+url = "https://raw.githubusercontent.com/245094-png/weather-ml-project/main/weatherHistory.csv"
+data = pd.read_csv(url)
 
 print("Data loaded")
 
