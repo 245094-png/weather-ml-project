@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 
@@ -22,13 +24,41 @@ y = data['Summary']
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-model = KNeighborsClassifier(n_neighbors=5)
-model.fit(X_train, y_train)
+# ================= KNN =================
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
 
-predictions = model.predict(X_test)
+knn_predictions = knn.predict(X_test)
+knn_accuracy = accuracy_score(y_test, knn_predictions)
 
-accuracy = accuracy_score(y_test, predictions)
+print("KNN Accuracy:", knn_accuracy)
 
-print("Accuracy:", accuracy)
+dt = DecisionTreeClassifier()
+dt.fit(X_train, y_train)
+
+dt_predictions = dt.predict(X_test)
+dt_accuracy = accuracy_score(y_test, dt_predictions)
+
+print("Decision Tree Accuracy:", dt_accuracy)
+
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+rf_predictions = rf.predict(X_test)
+rf_accuracy = accuracy_score(y_test, rf_predictions)
+
+print("Random Forest Accuracy:", rf_accuracy)
+
+accuracies = {
+    "KNN": knn_accuracy,
+    "Decision Tree": dt_accuracy,
+    "Random Forest": rf_accuracy
+}
+
+best_model = max(accuracies, key=accuracies.get)
+
+print("Best Model:", best_model)
