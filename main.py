@@ -2,41 +2,45 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import StandardScaler
 
 print("Program started")
 
-# Load dataset
+# ===================== LOAD DATA =====================
 url = "https://raw.githubusercontent.com/245094-png/weather-ml-project/main/weatherHistory.csv"
 data = pd.read_csv(url)
 
 print("Data loaded")
 
-# Select columns
+# ===================== DATA PREPROCESSING =====================
 data = data[['Temperature (C)', 'Humidity', 'Wind Speed (km/h)', 'Summary']]
 data = data.dropna()
 
-# Convert labels to numbers
 data['Summary'] = data['Summary'].astype('category').cat.codes
 
-# Features and target
 X = data.drop('Summary', axis=1)
 y = data['Summary']
 
-# Scale data
+# ===================== VISUALIZATION =====================
+plt.figure()
+data['Summary'].value_counts().plot(kind='bar')
+plt.title("Weather Classes Distribution")
+plt.show()
+
+# ===================== SCALING =====================
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
 
-# Split dataset
+# ===================== TRAIN/TEST SPLIT =====================
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# ================= KNN =================
+# ===================== MODEL 1: KNN =====================
 knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train, y_train)
 
@@ -45,7 +49,7 @@ knn_acc = accuracy_score(y_test, knn_pred)
 
 print("KNN Accuracy:", knn_acc)
 
-# ================= Decision Tree =================
+# ===================== MODEL 2: DECISION TREE =====================
 dt = DecisionTreeClassifier()
 dt.fit(X_train, y_train)
 
@@ -54,7 +58,7 @@ dt_acc = accuracy_score(y_test, dt_pred)
 
 print("Decision Tree Accuracy:", dt_acc)
 
-# ================= Random Forest =================
+# ===================== MODEL 3: RANDOM FOREST =====================
 rf = RandomForestClassifier(n_estimators=100, random_state=42)
 rf.fit(X_train, y_train)
 
@@ -63,22 +67,32 @@ rf_acc = accuracy_score(y_test, rf_pred)
 
 print("Random Forest Accuracy:", rf_acc)
 
+# ===================== MODEL COMPARISON =====================
 models = ['KNN', 'Decision Tree', 'Random Forest']
-accuracies = [knn_acc, dt_acc, rf_acc]
+acc = [knn_acc, dt_acc, rf_acc]
 
-plt.bar(models, accuracies)
+plt.figure()
+plt.bar(models, acc)
 plt.title("Model Comparison")
-plt.ylabel("Accuracy")
 plt.show()
 
-best_model = max({
-    "KNN": knn_acc,
-    "Decision Tree": dt_acc,
-    "Random Forest": rf_acc
-}, key={
-    "KNN": knn_acc,
-    "Decision Tree": dt_acc,
-    "Random Forest": rf_acc
-}.get)
+# ===================== BEST MODEL =====================
+best_model = max([
+    ("KNN", knn_acc),
+    ("Decision Tree", dt_acc),
+    ("Random Forest", rf_acc)
+], key=lambda x: x[1])
 
-print("Best Model:", best_model)
+print("Best Model:", best_model[0], "Accuracy:", best_model[1])
+
+# ===================== PREDICTION =====================
+temp = float(input("Enter Temperature: "))
+humidity = float(input("Enter Humidity: "))
+wind = float(input("Enter Wind Speed: "))
+
+result = rf.predict(
+    pd.DataFrame([[temp, humidity, wind]],
+                 columns=['Temperature (C)', 'Humidity', 'Wind Speed (km/h)'])
+)
+
+print("Predicted Weather:", result[0])
