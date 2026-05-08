@@ -69,10 +69,10 @@ Random Forest achieved better performance and higher prediction accuracy.
 ### GitHub Repository
 [Weather ML Project Repository](https://github.com/245094-png/weather-ml-project)
 
-### Open in Google Colab
-[Open in Google Colab](https://colab.research.google.com/github/245094-png/weather-ml-project/blob/main/main.py)
 
----
-
-## 👩‍💻 Author
-Jana Essam
+ Author :-
+ Jana Essam >> 245094
+Nourhan mohamed >> 245408 
+Farah ehab >> 245044 
+Farah mohamed >> 245392 
+Mona mohamed >> 245067
