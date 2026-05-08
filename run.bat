@@ -1,5 +1,10 @@
 @echo off
-cd /d %~dp0
-call .venv\Scripts\activate
+echo ==========================
+echo Weather Classification AI
+echo ==========================
+
+pip install pandas scikit-learn matplotlib
+
 python main.py
+
 pause
