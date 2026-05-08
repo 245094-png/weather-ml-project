@@ -66,11 +66,64 @@ Random Forest achieved better performance and higher prediction accuracy.
 
 ## ▶️ Run the Project
 
-### GitHub Repository
-[Weather ML Project Repository](https://github.com/245094-png/weather-ml-project)
+You can run this project using one of the following methods:
+
+---
+
+### 🌐 Method 1: Google Colab (Recommended)
 
 [Open in Google Colab](https://colab.research.google.com/drive/1UZcz0CfIOc9qNZBzaIg8CNb9NFqpg0Gc)
 
+Steps:
+- Open the link
+- Click Runtime → Run all
+- View results (Accuracy + Predictions)
+
+---
+
+### 💻 Method 2: Run Locally (Python)
+
+1. Clone the repository:
+```
+git clone https://github.com/245094-png/weather-ml-project
+``` id="g1"
+
+2. Enter project folder:
+```
+cd weather-ml-project
+``` id="g2"
+
+3. Install dependencies:
+```
+pip install pandas scikit-learn matplotlib
+``` id="g3"
+
+4. Run the project:
+```
+python main.py
+``` id="g4"
+
+---
+
+### ⚡ Method 3: One-click Run (Windows)
+
+Double click:
+```
+Run.bat
+``` id="g5"
+
+This will:
+- Install required libraries
+- Run the model automatically
+- Show output results
+
+---
+
+## 📌 Expected Output
+- Program started
+- Data loaded
+- Model Accuracy
+- Weather Prediction Result
 
 ## Author :-
 ## Jana Essam >> 245094
